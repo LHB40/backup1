@@ -1,0 +1,26 @@
+﻿<html>
+<head lang="zh-CN">
+<h1>滚刀检查仪量块计算</h1>
+<style type="text/css">
+input {width:100px}
+button:hover{color:#ff0000}
+</style>
+</head>
+<body>
+<script>
+function aa()
+{
+var h1
+beita=document.getElementById("beita").value;
+gundao=document.getElementById("gundao").value;
+jiyuanpan=document.getElementById("jiyuanpan").value;
+h1=150+(Math.tan(beita)*gundao*1000/(2*Math.sqrt(Math.pow(jiyuanpan,2)+Math.pow(Math.tan(beita),2)*Math.pow((gundao),2))));
+alert(h1);
+}
+</script>
+<p><input id=beita type=text value=0.1>输入导程角（弧度）</input></p>
+<p><input id=gundao type=text value=38>输入滚刀直径</input></p>
+<p><input id=jiyuanpan type=text value=60>输入圆盘直径</input></p>
+<button type="button" onclick=aa()>计算</button>
+</body>
+</html>

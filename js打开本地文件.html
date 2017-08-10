@@ -1,0 +1,27 @@
+<html>
+<head>
+<meta charset="UTF-8" />
+<script>
+function upload(input) {
+
+
+		var file = input.files[0];
+
+		//filename = file.name.split(".")[0];
+
+		var reader = new FileReader();
+
+		reader.onload = function() {
+			console.log(this.result)
+			alert(this.result);
+		}
+		reader.readAsText(file);
+	
+}
+</script>
+<title>file upload</title>
+</head>
+<body>
+	<input type="file" onchange="upload(this)" />
+</body>
+</html>
