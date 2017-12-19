@@ -8,7 +8,7 @@ def mailMe(text):
     subject = '邮件测试'  #邮件名称
     smtpserver = 'smtp.163.com'  #邮件服务器  
     username = 'fdrv'   #发送邮箱的账号
-    password = '88292145369'  #发送邮箱的密码
+    password = '*******'  #发送邮箱的密码
     #MIMEText的第一项为发送内容
     msg = MIMEText(text,'plain','utf-8')#中文需参数‘utf-8'，单字节字符不需要  
     msg['Subject'] = Header(subject, 'utf-8')  
