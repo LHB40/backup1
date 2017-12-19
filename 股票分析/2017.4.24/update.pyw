@@ -3,7 +3,7 @@ from email import parser
 
 p=poplib.POP3('pop.163.com')    #设置pop3连接对象
 p.user('soar3033@163.com')          #登陆id
-ps='gf8829'+'2145'+'369'
+ps='********'
 p.pass_(ps)       #密码
 lis=p.list()[1]         #获得邮件列表
 lislen=len(lis)         #获得邮件数量
