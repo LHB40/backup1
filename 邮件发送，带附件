@@ -23,7 +23,7 @@ def mailMe(text):
     att = MIMEBase('application', 'octet-stream')   
     att.set_payload(open(r'd:\1.jpg', 'rb').read())  
     encoders.encode_base64(att)  
-    att.add_header('Content-Disposition', 'attachment',filename="1.jpg")  
+    att.add_header('Content-Disposition', 'attachment',filename="1.jpg")    # filename=('gbk', '', filename)  
     msg.attach(att)
     
     smtp = smtplib.SMTP()  
