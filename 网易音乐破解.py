@@ -27,7 +27,7 @@ while 1:
                 print(len(k))
                 ta=k
             for i in ta:
-                if i.split('.')=='uc':
+                if i.split('.')[-1]=='uc':
                     crash(i)
         print('all finish')
     except Exception as err:
