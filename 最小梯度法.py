@@ -3,7 +3,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 
 def zz(x,y):
-    return (x-10)**2+(y-10)**2+x*y
+    return (x-10)**2+(y-10)**2
     
 x=np.arange(-20,20,0.25)
 y=np.arange(-20,20,0.25)
