@@ -52,17 +52,17 @@ def back(x,y,t):
 def ss(x,y):
     print(forward(x,y)[3])
     
-step=0.1 #学习速率
+step=0.03 #学习速率
 
 '''初始化'''
 w=ar(3,4)
 m=ar(4,4)
 n=ar(4,1)
 
-l=[[3,7,1],[5,8.3,1],[2,1,1],[9,9,0],[7,9.8,0],[10,4.5,0]]
+l=[[3,7,1],[5,8.3,1],[2,1,1],[9,9,0],[7,9.8,0],[10,4.5,0],[6,15,1],[9,40,1]]
 
 '''学习'''
-for i in range(10000):
+for i in range(20000):
     for j in l:
         x,y,t=j
         back(x,y,t)
@@ -71,15 +71,25 @@ for i in l:
     ss(i[0],i[1])
 
 '''输出结果图像'''
-t=[]
 cc=['b','r']
-for i in range(50):
-    for j in range(50):
-        t.append((i/5,j/5,forward(i/5,j/5)[3]))
+x = np.arange(0, 60, 1)
+y = np.arange(0, 60, 1)
+X,Y = np.meshgrid(x, y)
+Z=[]
+for i in range(len(X)):
+    z=[]
+    for j in range(len(X[0])):
+        k=1 if forward(X[i][j],Y[i][j])[3]>0.5 else 0
+        z.append(k)
+        #z.append(forward(X[i][j],Y[i][j])[3])
+    Z.append(z)
 
-fig=plt.figure()
-ax=plt.subplot(111)
-for i in t[::4]:
+fig=plt.figure(frameon=False)
+im2 = plt.imshow(Z, cmap=plt.cm.jet, alpha=.9, interpolation='bilinear')
+
+for i in l:
     k=1 if i[2]>0.5 else 0
     plt.scatter(i[0],i[1],c=cc[k])
+
 plt.show()
+
