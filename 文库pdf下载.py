@@ -1,6 +1,10 @@
+import os
+os.system('title gao')
 from urllib.request import urlopen
 from urllib.request import Request
 import re
+import os
+
 
 
 def html(url):
@@ -12,17 +16,23 @@ def png(data,i=0):
     with open('%d.png' % i,'wb') as txt:
         txt.write(data)
         
-url=r'https://wenku.baidu.com/view/ff2506ffee06eff9aff807ae.html?from=search'
+#url=r'https://wenku.baidu.com/view/7dd7dfbe8bd63186bcebbc8b.html'
+url=input(r'输入要破解的文库地址：')
 
 res=html(url).decode('gbk')
-root=re.findall(r'wkbos.bdimg.com(.+?)0\.json\?response',res)[0]
-root=root.replace(r'\\\/',r'/')
-root=r'https://wkbos.bdimg.com'+root+r'0.png'
+
+#print(res)
+try:
+    root=re.findall(r'wkbos.bdimg.com(.+?)0\.json\?response',res)[0]
+    root=root.replace(r'\\\/',r'/')
+    root=r'https://wkbos.bdimg.com'+root+r'0.png'
+except:
+    root=re.findall(r'wkbjbos.bdimg.com(.+?)0\.json\?response',res)[0]
+    root=root.replace(r'\\\/',r'/')
+    root=r'https://wkbjbos.bdimg.com'+root+r'0.png'
 
 result=re.findall(r'0.png?(.+?)\\x22}',res)
 result=[root+i for i in result]
 
 for i in range(int(len(result)/2)):
     png(html(result[i]),i)
-
-
