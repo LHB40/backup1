@@ -6,9 +6,15 @@ import threading
 import time
 import os
 
-url1=r'http://www.gb688.cn/bzgk/gb/std_list_type?r=0.6317334363354967&page=%s&pageSize=50&p.p1=1&p.p5=PUBLISHED&p.p90=circulation_date&p.p91=desc'
+st=1
+if st==0:
+    url1=r'http://www.gb688.cn/bzgk/gb/std_list_type?r=0.6317334363354967&page=%s&pageSize=50&p.p1=1&p.p5=PUBLISHED&p.p90=circulation_date&p.p91=desc'
+else:
+    url1=r'http://www.gb688.cn/bzgk/gb/std_list_type?r=0.2806449853929156&page=%s&pageSize=50&p.p1=2&p.p90=circulation_date&p.p91=desc'
 
+url2=r'http://c.gb688.cn/bzgk/gb/showGb?type=online&hcno='
 url=r'http://c.gb688.cn/bzgk/gb/viewGb?hcno='
+url3=r'http://www.gb688.cn/bzgk/gb/newGbInfo?hcno='
 
 count=10
 lis=[]
@@ -32,15 +38,33 @@ def download(code,name):
     if not os.path.exists(name):
         #print(name)
         target=url+code
-        request=ur.urlopen(target)
-        content=request.read()
-        txt=open(name,'wb')
-        txt.write(content)
-        txt.flush()
-        txt.close()
-
+        try:
+            request=ur.urlopen(target)
+            content=request.read()
+            txt=open(name,'wb')
+            txt.write(content)
+            txt.flush()
+            txt.close()
+        except:
+            yulan=url3+code
+            request=ur.urlopen(yulan)
+            content=request.read().decode('utf-8')
+            if len(re.findall('在线预览',content))!=0:
+                target=url2+code
+                target= '''[{000214A0-0000-0000-C000-000000000046}]
+Prop3=19,2
+[InternetShortcut]
+IDList=
+URL=%s''' % target
+                name=name.replace(r'.pdf',r'.url')
+                name=name.replace('/',' ')
+                txt=open(name,'wb')
+                txt.write(target.encode('utf-8'))
+                txt.flush()
+                txt.close()
+                
 def main():
-    for j in range(42):
+    for j in range(42 if st==0 else 770):
         tar=url1 % str(j+1)
         tars=getNext(html(tar))
         lock.acquire()
