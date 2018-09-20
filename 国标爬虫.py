@@ -4,6 +4,7 @@ from urllib.parse import unquote
 from threading import Thread as th
 import threading
 import time
+import os
 
 url1=r'http://www.gb688.cn/bzgk/gb/std_list_type?r=0.6317334363354967&page=%s&pageSize=50&p.p1=1&p.p5=PUBLISHED&p.p90=circulation_date&p.p91=desc'
 
@@ -22,18 +23,21 @@ def html(url):
     return request
 
 def getNext(html):
-    #results=re.findall('showInfo\(\'(.+?)\'\)',html)
     results=re.findall('showInfo\(\'(.+?)</a>',html,re.M)
     return results
 
 def download(code,name):
-    target=url+code
-    request=ur.urlopen(target)
-    content=request.read()
-    txt=open(name+r'.pdf','wb')
-    txt.write(content)
-    txt.flush()
-    txt.close()
+    name=name+r'.pdf'
+    name=name.replace(r':','：')
+    if not os.path.exists(name):
+        #print(name)
+        target=url+code
+        request=ur.urlopen(target)
+        content=request.read()
+        txt=open(name,'wb')
+        txt.write(content)
+        txt.flush()
+        txt.close()
 
 def main():
     for j in range(42):
@@ -46,18 +50,16 @@ def main():
         lock.release()
     while 1:
         lock.acquire()
-        print('threads count is'+str(len(threads))+'\n\n')
         if sum(marks)==0 and len(lis)==0:
             mark=1
+            time.sleep(2)
             break
-            print(1)
-        sleep(3)
         lock.release()
+        time.sleep(3)
         
 def sub(i):
     while 1:
         if mark==1:
-            print('thread',i,'exit')
             break
         lock.acquire()
         if len(lis)!=0:
@@ -67,7 +69,6 @@ def sub(i):
             del(lis[0])
             lock.release()
             try:
-                print(name+'\n\n')
                 download(code,name) 
             except:
                 pass
